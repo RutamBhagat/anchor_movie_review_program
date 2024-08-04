@@ -31,7 +31,7 @@ pub mod anchor_movie_review_program {
         title: String,
         description: String,
         rating: u8,
-    )-> Result<()> {
+    ) -> Result<()> {
         msg!("Movie review account space reallocated");
         msg!("Title: {}", title);
         msg!("Description: {}", description);
@@ -52,9 +52,9 @@ pub mod anchor_movie_review_program {
 
 #[derive(Accounts)]
 #[instruction(title: String, description: String)]
-pub struct AddMovieReview<'info>{
+pub struct AddMovieReview<'info> {
     #[account(
-        init, 
+        init,
         seeds = [title.as_bytes(), initializer.key().as_ref()],
         bump,
         payer = initializer,
@@ -68,7 +68,7 @@ pub struct AddMovieReview<'info>{
 
 #[derive(Accounts)]
 #[instruction(title: String, description: String)]
-pub struct  UpdateMovieReview<'info>{
+pub struct UpdateMovieReview<'info> {
     #[account(
         mut,
         seeds = [title.as_bytes(), initializer.key().as_ref()],
@@ -80,7 +80,7 @@ pub struct  UpdateMovieReview<'info>{
     pub movie_review: Account<'info, MovieAccountState>,
     #[account(mut)]
     pub initializer: Signer<'info>,
-    pub system_program: Program<'info, System>
+    pub system_program: Program<'info, System>,
 }
 
 #[derive(Accounts)]
@@ -88,14 +88,14 @@ pub struct  UpdateMovieReview<'info>{
 pub struct DeleteMovieReview<'info> {
     #[account(
         mut,
-        seeds = [title.as_bytes(),initializer.key().as_ref()],
+        seeds = [title.as_bytes(), initializer.key().as_ref()],
         bump,
         close = initializer
     )]
     pub movie_review: Account<'info, MovieAccountState>,
     #[account(mut)]
     pub initializer: Signer<'info>,
-    pub system_program: Program<'info, System>
+    pub system_program: Program<'info, System>,
 }
 
 #[account]
