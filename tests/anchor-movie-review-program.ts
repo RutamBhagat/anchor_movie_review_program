@@ -17,7 +17,8 @@ describe("anchor-movie-review-program", () => {
     description: "Wow what a good movie it was real great",
     rating: 5,
   };
-  const [moviePda] = anchor.web3.PublicKey.findProgramAddressSync(
+
+  const [moviePDA] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from(movie.title), provider.wallet.publicKey.toBuffer()],
     program.programId
   );
@@ -28,7 +29,7 @@ describe("anchor-movie-review-program", () => {
       .addMovieReview(movie.title, movie.description, movie.rating)
       .rpc();
 
-    const account = await program.account.movieAccountState.fetch(moviePda);
+    const account = await program.account.movieAccountState.fetch(moviePDA);
     expect(movie.title === account.title);
     expect(movie.rating === account.rating);
     expect(movie.description === account.description);
@@ -43,7 +44,7 @@ describe("anchor-movie-review-program", () => {
       .updateMovieReview(movie.title, newDescription, newRating)
       .rpc();
 
-    const account = await program.account.movieAccountState.fetch(moviePda);
+    const account = await program.account.movieAccountState.fetch(moviePDA);
     expect(movie.title === account.title);
     expect(newRating === account.rating);
     expect(newDescription === account.description);
