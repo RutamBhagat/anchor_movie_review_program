@@ -89,10 +89,10 @@ pub mod anchor_movie_review_program {
 pub struct AddMovieReview<'info> {
     #[account(
         init,
-        seeds = [title.as_bytes(), initializer.key().as_ref()],
+        seeds=[title.as_bytes(), initializer.key().as_ref()],
         bump,
         payer = initializer,
-        space = 8 + 32 + 1 + 4 + title.len() + 4 + description.len(),
+        space = 8 + 32 + 1 + 4 + title.len() + 4 + description.len()
     )]
     pub movie_review: Account<'info, MovieAccountState>,
     #[account(mut)]

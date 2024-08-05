@@ -1,5 +1,7 @@
 import * as anchor from "@coral-xyz/anchor";
 
+import { getAccount, getAssociatedTokenAddress } from "@solana/spl-token";
+
 import { AnchorMovieReviewProgram } from "../target/types/anchor_movie_review_program";
 import { Program } from "@coral-xyz/anchor";
 import { expect } from "chai";
@@ -20,6 +22,11 @@ describe("anchor-movie-review-program", () => {
 
   const [moviePDA] = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from(movie.title), provider.wallet.publicKey.toBuffer()],
+    program.programId
+  );
+
+  const [mint] = anchor.web3.PublicKey.findProgramAddressSync(
+    [Buffer.from("mint")],
     program.programId
   );
 
@@ -53,5 +60,9 @@ describe("anchor-movie-review-program", () => {
 
   it("Deletes a movie review", async () => {
     const tx = await program.methods.deleteMovieReview(movie.title).rpc();
+  });
+
+  it("Initializes the reward token", async () => {
+    const tx = await program.methods.initializeTokenMint().rpc();
   });
 });
