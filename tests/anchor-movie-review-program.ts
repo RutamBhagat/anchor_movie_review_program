@@ -42,10 +42,7 @@ describe("anchor-movie-review-program", () => {
 
     const tx = await program.methods
       .addMovieReview(movie.title, movie.description, movie.rating)
-      .accounts({
-        //@ts-ignore // This works, but it's a hack
-        tokenAccount: tokenAccount,
-      })
+      .accounts({})
       .rpc();
 
     const account = await program.account.movieAccountState.fetch(movie_pda);
